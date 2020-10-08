@@ -1,0 +1,23 @@
+---
+- hosts: all
+  gather_facts: no
+  tasks:
+
+    - name: Update Plex
+      pkgng:
+        name: plexmediaserver-plexpass
+        state: latest
+      notify: restart plex
+
+    - name: Update Server
+      pkgng:
+        name: '*'
+        state: latest
+        autoremove: yes
+
+  handlers:
+
+    - name: restart plex
+      service:
+        name: plexmediaserver_plexpass
+        state: restarted
