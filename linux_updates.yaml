@@ -3,9 +3,25 @@
   hosts: all
   tasks:
 
-  - name: Upgrade Red Hat based machines
+  - name: Upgrade Red Hat based hosts
     yum:
       name: '*'
       state: latest
       update_cache: yes
     when: ansible_os_family == "RedHat" and skip_update is not defined
+    notify: fix boot
+
+  - name: Upgrade Debian based hosts
+    apt:
+      force_apt_get: yes
+      name: '*'
+      state: latest
+      update_cache: yes
+      autoremove: yes
+    when: ansible_os_family == "Debian" and skip_update is not defined
+    notify: fix boot
+
+  handlers:
+  - name: fix boot
+    script: files/{{ boot_script }}
+    when: boot_script is defined

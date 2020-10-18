@@ -3,6 +3,9 @@
   gather_facts: no
   tasks:
 
+    - name: Update package repos
+      command: pkg update
+
     - name: Update Plex
       pkgng:
         name: plexmediaserver-plexpass
