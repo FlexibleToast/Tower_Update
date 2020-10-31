@@ -4,7 +4,7 @@
   tasks:
 
     - name: Update package repos
-      command: pkg update
+      command: pkg update --quiet
 
     - name: Update Plex
       pkgng:
